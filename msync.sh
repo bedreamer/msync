@@ -20,11 +20,12 @@ function __show_usage() {
 		echo -e "    msync - sync files from master to slave directory."
 	fi
 		echo -e "USAGE:"
-		echo -e "    ./msync.sh [[-m directory] [-s directory]|-c|-h]"
+		echo -e "    ./msync.sh [-m directory] [-s directory] {OPTIONS}"
 	if [ "$1" == "2" ]; then
-		echo -e "OPTIONS"
+		echo -e "NEEDED:"
 		echo -e "    -m: spesfic master directory."
 		echo -e "    -s: spesfic slave directory."
+		echo -e "OPTIONS:"
 		echo -e "    -c: create slave directory if not exsit."
 		echo -e "    -S: do sync after update."
 		echo -e "    -A: do add/update file/directory operate."
@@ -94,8 +95,8 @@ function __sync_cf_cd() {
 				echo -e "\033[49;32;5m[CF]\033[0m $2/$f";
 				cp $1/$f $2/$f 2>/dev/null;
 			else
-				md51=`md5sum $1/$f | awk '{print $1}'`;
-				md52=`md5sum $2/$f | awk '{print $1}'`;
+				md51=`md5 $1/$f | awk '{print $1}'`;
+				md52=`md5 $2/$f | awk '{print $1}'`;
 				if [ "$md51" != "$md52" ]; then
 					echo -e "\033[49;33;5m[UF]\033[0m $2/$f";
 				fi
